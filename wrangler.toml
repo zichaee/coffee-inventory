@@ -1,0 +1,8 @@
+name = "inventory_management"
+main = "src/App.jsx"
+
+[[d1_databases]]
+binding = "INVENTORY_MANAGEMENT"
+database_name = "inventory_management"
+database_id = "cd9b3e34-d963-4277-84de-0a9fd64a96cf"
+preview_database_id = "INVENTORY_MANAGEMENT"

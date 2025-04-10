@@ -1,0 +1,18 @@
+[user]
+	name = Ayu Medina Prameswari
+	email = ayumedinap@gmail.com
+[github]
+	user = zichaee
+[color]
+	ui = true
+[core]
+	excludesfile = ~/.gitignore_global
+	editor = nvim
+[merge]
+	conflictstyle = diff3
+[diff]
+	colorMoved = default
+[interactive]
+	diffFilter = delta --color-only
+[alias]
+	root = rev-parse --show-toplevel

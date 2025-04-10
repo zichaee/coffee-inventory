@@ -1,0 +1,4 @@
+#!/bin/bash
+./reset_db
+./setup_db
+./run

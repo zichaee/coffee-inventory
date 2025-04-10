@@ -1,0 +1,5 @@
+#!/bin/bash
+npx wrangler d1 execute inventory_management \
+  --local --file="./db/inventory_management.sql"
+npx wrangler d1 execute inventory_management \
+  --local --file="./db/sample_data.sql"
