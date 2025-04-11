@@ -1,5 +1,6 @@
 name = "inventory-management"
 main = "src/App.jsx"
+pages_build_output_dir = "dist"
 
 [[d1_databases]]
 binding = "INVENTORY_MANAGEMENT"
