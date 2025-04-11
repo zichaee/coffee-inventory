@@ -1,4 +1,4 @@
-name = "inventory_management"
+name = "inventory-management"
 main = "src/App.jsx"
 
 [[d1_databases]]
