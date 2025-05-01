@@ -12,6 +12,14 @@ export default function Home() {
     <Stack spacing={2} sx={{ textAlign: "left" }}>
       <Typography variant="h4" >Insights</Typography>
       <Stack spacing={2}>
+        <CustomPaper>
+          <Stack spacing={2}>
+            <Typography variant="h6" >Selamat Datang di Sistem Informasi Tani Coffee Indonesia</Typography>
+            <Typography variant="body1">
+              Meningkatkan Efisiensi Pengelolaan Inventaris Produk Kopi Lokal dengan Teknologi Terintegrasi
+            </Typography>
+          </Stack>
+        </CustomPaper>
         <Stack
           spacing={{ xs: 2, sm: 2 }}
           direction="row"
@@ -19,21 +27,25 @@ export default function Home() {
           sx={{ flexWrap: "wrap", alignItems: "stretch" }}
         >
           <CustomPaper>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </Typography>
+            <Stack spacing={2}>
+              <Typography variant="h6" >Tentang Sistem</Typography>
+              <Typography variant="body1">
+                Sistem ini dirancang untuk membantu startup Tani Coffee Indonesia dalam mengelola rantai pasok dan stok produk secara efisien dan akurat. Dibangun dengan metode Extreme Programming (XP) untuk memastikan pengembangan cepat, kolaboratif, dan berorientasi pada kebutuhan pengguna.
+              </Typography>
+            </Stack>
           </CustomPaper>
           <CustomPaper>
+            <Typography variant="h6" >Fitur Utama</Typography>
             <Typography variant="body1">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              <ul>
+                <li>Manajemen Supplier – Catat dan kelola informasi mitra petani atau pemasok kopi.</li>
+                <li>Monitoring Stok – Pantau ketersediaan barang secara real-time dan akurat.</li>
+                <li>Pencatatan Transaksi – Dokumentasi order pembelian, penjualan, dan invoice secara sistematis.</li>
+                <li>Laporan & Insights – Lihat analisis sederhana terkait performa stok dan penjualan.</li>
+              </ul>
             </Typography>
           </CustomPaper>
         </Stack>
-        <CustomPaper>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </Typography>
-        </CustomPaper>
       </Stack>
     </Stack>
   );
