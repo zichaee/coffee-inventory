@@ -41,6 +41,7 @@ const CustomDataGrid = (props) => {
       pageSizeOptions={[5, 10]}
       slots={{ toolbar: GridToolbar }}
       slotProps={{ toolbar: { showQuickFilter: true } }}
+      disableRowSelectionOnClick
     />
   );
 };

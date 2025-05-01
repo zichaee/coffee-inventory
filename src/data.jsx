@@ -1,3 +1,26 @@
+//import {
+  //Button,
+//} from "@mui/material";
+//import EditIcon from '@mui/icons-material/Edit';
+//import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
+//const columnsSuppliers = [
+  //{
+    //field: 'actions',
+    //headerName: '',
+    //sortable: false,
+    //renderCell: ({ row }) =>
+      //<>
+        //<Button onClick={() => console.log('Hello world')}>
+          //<EditIcon/>
+        //</Button>
+        //<Button color='error' onClick={() => console.log('Hello world')}>
+          //<DeleteForeverIcon/>
+        //</Button>
+      //</>,
+    //minWidth: 150,
+  //},
+
 const columnsSuppliers = [
   { field: 'supplier_id', headerName: 'Supplier ID', minWidth: 200 },
   { field: 'supplier_name', headerName: 'Supplier Name', minWidth: 200 },
