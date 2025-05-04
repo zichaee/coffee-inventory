@@ -10,11 +10,10 @@ import {
 export default function Home() {
   return (
     <Stack spacing={2} sx={{ textAlign: "left" }}>
-      <Typography variant="h4" >Insights</Typography>
+      <Typography variant="h4" >Selamat Datang di Sistem Informasi Tani Coffee Indonesia</Typography>
       <Stack spacing={2}>
         <CustomPaper>
           <Stack spacing={2}>
-            <Typography variant="h6" >Selamat Datang di Sistem Informasi Tani Coffee Indonesia</Typography>
             <Typography variant="body1">
               Meningkatkan Efisiensi Pengelolaan Inventaris Produk Kopi Lokal dengan Teknologi Terintegrasi
             </Typography>
@@ -38,10 +37,8 @@ export default function Home() {
             <Typography variant="h6" >Fitur Utama</Typography>
             <Typography variant="body1">
               <ul>
-                <li>Manajemen Supplier – Catat dan kelola informasi mitra petani atau pemasok kopi.</li>
-                <li>Monitoring Stok – Pantau ketersediaan barang secara real-time dan akurat.</li>
-                <li>Pencatatan Transaksi – Dokumentasi order pembelian, penjualan, dan invoice secara sistematis.</li>
-                <li>Laporan & Insights – Lihat analisis sederhana terkait performa stok dan penjualan.</li>
+                <li>Monitoring Stok: Pantau ketersediaan barang secara real-time dan akurat.</li>
+                <li>Pencatatan Mutasi Stok: Catatan riwayat keluar-masuknya barang-barang stok.</li>
               </ul>
             </Typography>
           </CustomPaper>

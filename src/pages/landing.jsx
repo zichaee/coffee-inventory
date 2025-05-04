@@ -1,5 +1,6 @@
 import { customTheme } from "../theme.jsx"
-import companyLogo from "../assets/logo.png";
+import companyLogo from "../assets/logo_white.png";
+import bg from "../assets/bg.jpeg";
 
 import React, { useState } from "react";
 import {
@@ -48,11 +49,7 @@ export default function Landing(props) {
           <ListItemText primary="Home" />
         </ListItem>
         {[
-          "Suppliers",
-          "Inventory",
-          "Orders",
-          "Invoices",
-          "Sales",
+          "Catalogue",
         ].map((text) => (
           <ListItem button key={text} component="a" href={`/${text.toLowerCase().replace(/ /g, "-")}`}>
             <ListItemText primary={text} />
@@ -111,13 +108,10 @@ export default function Landing(props) {
 
         {isLargeScreen ? (
           <>
-            <AppBar position="fixed" sx={{ mt: '64px' }}>
+            <AppBar position="fixed" sx={{ mt: '64px', bgcolor: '#b9cdac' }}>
               <Tabs value={false} role="navigation" centered>
                 <Tab component="a" label="Home" index={2} href="/" />
-                <Tab component="a" label="Suppliers" index={2} href="/suppliers" />
-                <Tab component="a" label="Inventory" href="/inventory" />
-                <Tab component="a" label="Orders" href="/orders" />
-                <Tab component="a" label="Sales" href="/sales" />
+                <Tab component="a" label="Catalogue" href="/catalogue" />
               </Tabs>
             </AppBar>
             <Box sx={{ height: '64px' }}></Box>
@@ -172,21 +166,17 @@ export default function Landing(props) {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
-          <MenuItem onClick={handleProfileClose}>
-            <Avatar /> My account
-          </MenuItem>
-          <Divider />
           <MenuItem onClick={handleManageOtherAccounts}>
             <ListItemIcon>
               <PersonAdd fontSize="small" />
             </ListItemIcon>
-            Manage Other Accounts
+            Kelola Akun Lain
           </MenuItem>
           <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            Logout
+            Keluar
           </MenuItem>
         </Menu>
 

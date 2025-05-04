@@ -4,6 +4,12 @@ import {
 
 export const customTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
+    primary: {
+      main: '#508330',
+    },
+    secondary: {
+      main: '#9b620b',
+    },
   },
 });

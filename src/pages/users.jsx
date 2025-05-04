@@ -122,26 +122,9 @@ export default function Users() {
     <Stack spacing={2} sx={{ textAlign: "left" }}>
       <Typography variant="h4" >Users</Typography>
       <Stack spacing={2}>
-        <Stack
-          spacing={{ xs: 2, sm: 2 }}
-          direction="row"
-          useFlexGap
-          sx={{ flexWrap: "wrap", alignItems: "stretch" }}
-        >
-          <CustomPaper>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </Typography>
-          </CustomPaper>
-          <CustomPaper>
-            <Typography variant="body1">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Typography>
-          </CustomPaper>
-        </Stack>
         <CustomPaper>
           <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Anda dapat menambahkan pengguna baru di halaman ini.
           </Typography>
         </CustomPaper>
         <CustomDataGrid
@@ -151,20 +134,20 @@ export default function Users() {
           onRowSelectionModelChange={() => {}}
           sx={{ maxWidth: 'calc(100vw - 112px)' }}
         />
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Create New User
+        <Button variant="contained" onClick={handleClickOpen}>
+          Buat Pengguna Baru
         </Button>
         <FormDialog
           onSubmitContent={onSubmitContent}
           open={open}
-          title='Create New User'
-          contentText="You can add a user by filling in their details here."
-          submitLabel='Create User'
+          title='Buat Pengguna Baru'
+          contentText="Anda dapat memasukkan nama dan kata sandi untuk membuat pengguna baru di sini."
+          submitLabel='Buat Pengguna Baru'
           handleClose={handleClose}
           content={
             <Box>
               <FormControl autoFocus variant="filled" margin="dense" fullWidth required>
-                <InputLabel id="user-role-name-label">User Role</InputLabel>
+                <InputLabel id="user-role-name-label">Peran Pengguna</InputLabel>
                 <Select
                   labelId="user-role-name-label"
                   label="User Role"
@@ -208,7 +191,7 @@ export default function Users() {
                 margin="dense"
                 id="name"
                 name="password"
-                label="Password"
+                label="Kata Sandi"
                 type="password"
                 fullWidth
                 variant="filled"
@@ -218,7 +201,7 @@ export default function Users() {
                 margin="dense"
                 id="name"
                 name="repeated_password"
-                label="Repeat Password"
+                label="Ulangi Kata Sandi"
                 type="password"
                 fullWidth
                 variant="filled"

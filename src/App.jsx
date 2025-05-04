@@ -8,10 +8,11 @@ import Login from "./pages/login.jsx";
 import Landing from "./pages/landing.jsx";
 import Home from "./pages/home.jsx";
 import Inventory from "./pages/inventory.jsx";
-import Suppliers from "./pages/suppliers.jsx";
-import Orders from "./pages/orders.jsx";
-import Sales from "./pages/sales.jsx";
-import Invoices from "./pages/invoices.jsx";
+import Catalogue from "./pages/catalogue.jsx";
+//import Suppliers from "./pages/suppliers.jsx";
+//import Orders from "./pages/orders.jsx";
+//import Sales from "./pages/sales.jsx";
+//import Invoices from "./pages/invoices.jsx";
 import Users from "./pages/users.jsx";
 import View from "./pages/view.jsx";
 
@@ -83,13 +84,9 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Landing content={<Home />} />} />
-          <Route path='/suppliers' element={<Landing content={<Suppliers />} />} />
-          <Route path='/inventory' element={<Landing content={<Inventory />} />} />
-          <Route path='/orders' element={<Landing content={<Orders />} />} />
-          <Route path='/sales' element={<Landing content={<Sales />} />} />
-          <Route path='/invoices' element={<Landing content={<Invoices />} />} />
+          <Route path='/catalogue' element={<Landing content={<Catalogue />} />} />
           <Route path='/users' element={<Landing content={<Users />} />} />
-          <Route path='/view' element={<Landing content={<View />} />} />
+          <Route path='/inventory/*' element={<Landing content={<Inventory />} />} />
         </Routes>
       </BrowserRouter>
     );

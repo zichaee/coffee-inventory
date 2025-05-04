@@ -19,13 +19,22 @@ import {
 /**
  * A `Paper` element with custom shadows
  */
-const CustomPaper = styled(Paper)(({ theme }) => ({
+const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   textAlign: 'left',
   flex: "1",
   display: "flex",
   flexDirection: "column",
 }));
+
+const CustomPaper = (props) => {
+  return (
+    <StyledPaper
+      {...props}
+      variant="outlined"
+    />
+  );
+};
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   overflowX: "scroll",
@@ -36,13 +45,23 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
  */
 const CustomDataGrid = (props) => {
   return (
-    <StyledDataGrid
-      {...props}
-      pageSizeOptions={[5, 10]}
-      slots={{ toolbar: GridToolbar }}
-      slotProps={{ toolbar: { showQuickFilter: true } }}
-      disableRowSelectionOnClick
-    />
+    <CustomPaper
+      sx={{ p: 0, border: 0 }}
+    >
+      <StyledDataGrid
+        {...props}
+        pageSizeOptions={[5, 10]}
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            csvOptions: { allColumns: true },
+            printOptions: { disableToolbarButton: true },
+          }
+        }}
+        disableRowSelectionOnClick
+      />
+    </CustomPaper>
   );
 };
 

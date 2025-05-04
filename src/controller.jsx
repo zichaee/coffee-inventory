@@ -9,3 +9,15 @@ export async function fetchPut(api) {
   const result = await response.json();
   return result;
 }
+
+export async function fetchPost(api) {
+  const response = await fetch(api, { method: "POST" });
+  const result = await response.json();
+  return result;
+}
+
+export async function fetchDelete(api) {
+  const response = await fetch(api, { method: "DELETE" });
+  const result = await response.json();
+  return result;
+}

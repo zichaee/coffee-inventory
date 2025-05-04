@@ -1,7 +1,7 @@
 import Cloudflare from 'cloudflare';
 import { getTokenPermissions, getTokenUser } from '../../../utils.js';
 
-export async function onRequestPut(context) {
+export async function onRequestDelete(context) {
   const rawValues = context.params.values;
   const values = rawValues.map(item => item === 'null' ? null : item);
 
@@ -9,7 +9,7 @@ export async function onRequestPut(context) {
   const permissions = await getTokenPermissions(token, context);
 
   if (permissions.access_orders_write == 1) {
-    const ps = context.env.INVENTORY_MANAGEMENT.prepare("insert into inventory(received_date, expiration_date, quantity, unit_price, note, catalogue_id) values(?, ?, ?, ?, ?, ?);")
+    const ps = context.env.INVENTORY_MANAGEMENT.prepare("delete from catalogue where catalogue_id = ?;")
       .bind(...values);
     const data = await ps.run();
 
