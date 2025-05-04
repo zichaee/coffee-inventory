@@ -21,7 +21,6 @@ import {
   Box,
   Stack,
   TextField,
-  Autocomplete,
   InputAdornment,
   ListItem,
   ListItemAvatar,
@@ -35,10 +34,9 @@ import NumbersIcon from '@mui/icons-material/Numbers';
 import AbcIcon from '@mui/icons-material/Abc';
 import CategoryIcon from '@mui/icons-material/Category';
 import ScaleIcon from '@mui/icons-material/Scale';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {
   GridActionsCellItem,
 } from "@mui/x-data-grid";
@@ -188,8 +186,8 @@ export default function Inventory() {
   return (
     <Stack spacing={2} sx={{ textAlign: "left" }}>
       <Stack direction="row" sx={{ justifyContent: "flex-start" }}>
-        <Button variant="contained" href="/catalogue" sx={{ width: 400 }}>
-          Lihat Semua Produk Lain di Katalog
+        <Button variant="contained" startIcon={<ArrowBackIosIcon/>} href="/catalogue" fullWidth="false" >
+          Katalog
         </Button>
       </Stack>
       <Typography variant="h4" >Detail Produk</Typography>

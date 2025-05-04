@@ -27,13 +27,9 @@ import {
   GridActionsCellItem,
 } from "@mui/x-data-grid";
 
-export const handleSeeDetails = (params) => {
+const handleSeeDetails = (params) => {
   const catalogueID = params.row.catalogue_id;
-  window.location.replace(`/inventory/${catalogueID}`);
-};
-export const handleDeleteCatalogue = (params) => {
-  const catalogueID = params.row.catalogue_id;
-  console.log(catalogueID);
+  window.location.assign(`/inventory/${catalogueID}`);
 };
 
 export default function Catalogue() {

@@ -1,20 +1,15 @@
 pragma defer_foreign_keys=false;
-create table if not exists user_roles (
-  user_role_name text primary key,
+create table if not exists users (
+  username text primary key,
+  password text,
   access_users_read integer not null,
   access_users_write integer not null,
   access_catalogue_read integer not null,
   access_catalogue_write integer not null,
   access_inventory_read integer not null,
-  access_inventory_write integer not null
-);
-create table if not exists users (
-  username text primary key,
-  password text,
-  user_role_name text,
+  access_inventory_write integer not null,
   created_at timestamp not null default current_timestamp,
-  status text check(status in ('active', 'deactivated')) default 'active',
-  foreign key (user_role_name) references user_roles(user_role_name)
+  status text check(status in ('active', 'deactivated')) default 'active'
 );
 create table if not exists catalogue (
   catalogue_id integer primary key,

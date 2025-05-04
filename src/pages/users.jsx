@@ -24,6 +24,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function Users() {
   const [rows, setRows] = useState([]);
@@ -33,21 +34,9 @@ export default function Users() {
   const [userRoleName, setUserRoleName] = useState('');
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [supplierNames, setSupplierNames] = useState([]);
-  const [supplierName, setSupplierName] = useState('');
-  const [openSupplierChoice, setOpenSupplierChoice] = useState(false);
 
-  const handleChangeSupplierName = (event) => {
-    setSupplierName(event.target.value);
-  }
   const handleChangeUserRoleName = (event) => {
     setUserRoleName(event.target.value);
-
-    if (event.target.value === 'supplier') {
-      setOpenSupplierChoice(true);
-    } else {
-      setOpenSupplierChoice(false);
-    }
   }
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,8 +44,6 @@ export default function Users() {
   const handleClose = () => {
     setOpen(false);
     setUserRoleName('');
-    setSupplierName('');
-    setOpenSupplierChoice(false);
     setOpenAlert(false);
   };
   const onSubmitContent = async (event) => {
@@ -106,17 +93,6 @@ export default function Users() {
       })
       .finally(() => {});
   }, []);
-  useEffect(() => {
-    const token = localStorage.getItem('auth_token');
-    fetchGet(`/api/get/suppliers/${token}`)
-      .then((data) => {
-        setSupplierNames(data)
-      })
-      .catch((error) => {
-        console.error('Error fetching orders data:', error);
-      })
-      .finally(() => {});
-  }, []);
 
   return (
     <Stack spacing={2} sx={{ textAlign: "left" }}>
@@ -160,22 +136,6 @@ export default function Users() {
                   )}
                 </Select>
               </FormControl>
-              <Collapse in={openSupplierChoice}>
-                <FormControl autoFocus variant="filled" margin="dense" fullWidth required>
-                  <InputLabel id="supplier-name-label">Supplier Name</InputLabel>
-                  <Select
-                    labelId="supplier-name-label"
-                    label="Supplier Name"
-                    value={supplierName}
-                    onChange={handleChangeSupplierName}
-                    name="supplier_id"
-                  >
-                    {[...supplierNames].map((_, i) =>
-                      <MenuItem value={supplierNames[i].supplier_id}>{`${supplierNames[i].supplier_id} - ${supplierNames[i].supplier_name}`}</MenuItem>
-                    )}
-                  </Select>
-                </FormControl>
-              </Collapse>
               <TextField
                 required
                 margin="dense"

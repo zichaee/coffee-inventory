@@ -8,7 +8,7 @@ export async function onRequestPut(context) {
   const token = values.shift();
   const permissions = await getTokenPermissions(token, context);
 
-  if (permissions.access_orders_write == 1) {
+  if (permissions.access_inventory_write == 1) {
     const ps = context.env.INVENTORY_MANAGEMENT.prepare("insert into inventory(received_date, expiration_date, quantity, unit_price, note, catalogue_id) values(?, ?, ?, ?, ?, ?);")
       .bind(...values);
     const data = await ps.run();

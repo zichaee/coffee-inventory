@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
   const token = values.shift();
   const permissions = await getTokenPermissions(token, context);
 
-  if (permissions.access_orders_write == 1) {
+  if (permissions.access_catalogue_write == 1) {
     const ps = context.env.INVENTORY_MANAGEMENT.prepare("update catalogue set name = ?, category = ?, unit = ? where catalogue_id = ?;")
       .bind(...values);
     const data = await ps.run();
