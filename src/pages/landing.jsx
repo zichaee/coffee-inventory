@@ -49,6 +49,7 @@ export default function Landing(props) {
           <ListItemText primary="Home" />
         </ListItem>
         {[
+          "Suppliers",
           "Catalogue",
         ].map((text) => (
           <ListItem button key={text} component="a" href={`/${text.toLowerCase().replace(/ /g, "-")}`}>
@@ -111,6 +112,7 @@ export default function Landing(props) {
             <AppBar position="fixed" sx={{ mt: '64px', bgcolor: '#b9cdac' }}>
               <Tabs value={false} role="navigation" centered>
                 <Tab component="a" label="Home" index={2} href="/" />
+                <Tab component="a" label="Suppliers" index={2} href="/suppliers" />
                 <Tab component="a" label="Catalogue" href="/catalogue" />
               </Tabs>
             </AppBar>

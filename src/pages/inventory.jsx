@@ -26,6 +26,10 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -73,7 +77,7 @@ export default function Inventory() {
     const formJson = Object.fromEntries(formData.entries());
     const token = localStorage.getItem('auth_token');
 
-    fetchPut(`/api/put/inventory/${token}/${convertDateFormat(formJson.received_date)}/${convertDateFormat(formJson.expiration_date)}/${formJson.quantity}/${formJson.unit_price}/${formJson.note}/${catalogueID}`)
+    fetchPut(`/api/put/inventory/${token}/${formJson.supplier_id}/${convertDateFormat(formJson.received_date)}/${convertDateFormat(formJson.expiration_date)}/${formJson.quantity}/${formJson.unit_price}/${formJson.storage_location}/${formJson.note}/${catalogueID}`)
       .then((_) => {
         location.reload();
       })
@@ -81,6 +85,25 @@ export default function Inventory() {
         console.error('Error adding product data: ', error);
       });
   };
+
+  const [supplierNames, setSupplierNames] = useState([]);
+  const [supplierName, setSupplierName] = useState('');
+
+  const handleChangeSupplierName = (event) => {
+    setSupplierName(event.target.value);
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    fetchGet(`/api/get/suppliers/${token}`)
+      .then((data) => {
+        setSupplierNames(data)
+      })
+      .catch((error) => {
+        console.error('Error fetching orders data:', error);
+      })
+      .finally(() => {});
+  }, []);
 
   const [addOpen, setAddOpen] = useState(false);
   const [subtractOpen, setSubtractOpen] = useState(false);
@@ -104,6 +127,7 @@ export default function Inventory() {
     localStorage.setItem('current_product_expiration_date', details.expiration_date);
     localStorage.setItem('current_product_quantity', details.quantity);
     localStorage.setItem('current_product_unit_price', details.unit_price);
+    localStorage.setItem('current_product_storage_location', details.storage_location);
     localStorage.setItem('current_product_note', details.note);
     setEditOpen(true);
   };
@@ -144,7 +168,7 @@ export default function Inventory() {
     const formJson = Object.fromEntries(formData.entries());
     const token = localStorage.getItem('auth_token');
 
-    fetchPost(`/api/post/inventory/${token}/${convertDateFormat(formJson.received_date)}/${convertDateFormat(formJson.expiration_date)}/${formJson.quantity}/${formJson.unit_price}/${formJson.note}/${localStorage.getItem('current_product_id')}`)
+    fetchPost(`/api/post/inventory/${token}/${convertDateFormat(formJson.received_date)}/${convertDateFormat(formJson.expiration_date)}/${formJson.quantity}/${formJson.storage_location}/${formJson.unit_price}/${formJson.note}/${localStorage.getItem('current_product_id')}`)
       .then((_) => {
         location.reload();
       })
@@ -245,6 +269,20 @@ export default function Inventory() {
           contentText="Anda dapat memasukkan detail-detail produk yang ingin ditambahkan di sini."
           content={
             <Box>
+              <FormControl autoFocus variant="filled" margin="dense" fullWidth required>
+                <InputLabel id="supplier-name-label">Supplier Name</InputLabel>
+                <Select
+                  labelId="supplier-name-label"
+                  label="Supplier Name"
+                  value={supplierName}
+                  onChange={handleChangeSupplierName}
+                  name="supplier_id"
+                >
+                  {[...supplierNames].map((_, i) =>
+                    <MenuItem value={supplierNames[i].supplier_id}>{`${supplierNames[i].supplier_id} - ${supplierNames[i].supplier_name}`}</MenuItem>
+                  )}
+                </Select>
+              </FormControl>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   slotProps={{
@@ -304,6 +342,14 @@ export default function Inventory() {
                     startAdornment: <InputAdornment position="start">Rp</InputAdornment>,
                   },
                 }}
+              />
+              <TextField
+                required
+                fullWidth
+                margin="dense"
+                variant="filled"
+                name="storage_location"
+                label="Lokasi Penyimpanan"
               />
               <TextField
                 multiline
@@ -399,6 +445,15 @@ export default function Inventory() {
                   },
                 }}
                 defaultValue={localStorage.getItem('current_product_unit_price')}
+              />
+              <TextField
+                required
+                fullWidth
+                margin="dense"
+                variant="filled"
+                name="storage_location"
+                label="Lokasi Penyimpanan"
+                defaultValue={decodeURI(localStorage.getItem('current_product_storage_location'))}
               />
               <TextField
                 multiline

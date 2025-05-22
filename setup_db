@@ -1,5 +1,5 @@
 #!/bin/bash
 npx wrangler d1 execute inventory_management \
-  --local --file="./db/inventory_management_v2.sql"
+  --local --file="./db/inventory_management_v3.sql"
 npx wrangler d1 execute inventory_management \
   --local --file="./db/sample_data.sql"
