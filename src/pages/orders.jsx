@@ -20,7 +20,12 @@ import {
   FormControl,
   MenuItem,
 } from "@mui/material";
+import {
+  GridActionsCellItem,
+} from "@mui/x-data-grid";
 import { Add, Remove } from "@mui/icons-material";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function Orders() {
   const [rows, setRows] = useState([]);
@@ -29,6 +34,7 @@ export default function Orders() {
   const [fields, setFields] = useState([""]);
   const [supplierNames, setSupplierNames] = useState([]);
   const [supplierName, setSupplierName] = useState('');
+  const [productNames, setProductNames] = useState([]);
 
   const handleChangeSupplierName = (event) => {
     setSupplierName(event.target.value);
@@ -52,15 +58,15 @@ export default function Orders() {
           .map(key => parseInt(key.replace('item_name_', '')))) + 1;
 
         for (let i = 0; i < maxItemNumber; i++) {
-          fetchPut(`/api/put/order_details/${token}/${response.meta.last_row_id}/${formJson['item_name_' + i]}/${formJson['quantity_' + i]}/${formJson['unit_' + i]}`)
-            .then((_) => {})
+          fetchPut(`/api/put/order_details/${token}/${response.meta.last_row_id}/${formJson['item_name_' + i]}/${formJson['quantity_' + i]}`)
+            .then((_) => {
+              handleClose();
+              location.reload();
+            })
             .catch((error) => {
               console.error('Error creating order details: ', error);
             });
         }
-
-        handleClose();
-        location.reload();
       })
       .catch((error) => {
         console.error('Error creating order: ', error);
@@ -74,6 +80,45 @@ export default function Orders() {
   const handleRemoveField = (index) => {
     setFields(fields.filter((_, i) => i !== index));
   };
+
+  const handleSeeDetails = (params) => {
+    const orderID = params.row.order_id;
+    window.location.assign(`/order-details/${orderID}`);
+  };
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleClickDeleteOpen = (params) => {
+    const orderDetailID = params.row.order_detail_id;
+    localStorage.setItem('current_order_id', orderDetailID);
+    setDeleteOpen(true);
+  };
+  const handleDeleteClose = () => {
+    localStorage.removeItem('current_order_id');
+    setDeleteOpen(false);
+  };
+  const onSubmitDelete = (event) => {
+    const token = localStorage.getItem('auth_token');
+
+    fetchDelete(`/api/delete/orders/${token}/${localStorage.getItem('current_order_id')}`)
+      .then((_) => {
+        location.reload();
+      })
+      .catch((error) => {
+        console.error('Error deleting orders data: ', error);
+      });
+  };
+
+  // Add the action buttons
+  const columnsOrdersWithActions = [{
+    field: 'actions',
+    type: 'actions',
+    sortable: false,
+    getActions: (params) => [
+      <GridActionsCellItem icon={<VisibilityIcon />} label="See Details" onClick={() => {handleSeeDetails(params)}} />,
+      <GridActionsCellItem icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleClickDeleteOpen(params)} />,
+    ],
+  }].concat(columnsOrders);
+
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
     fetchGet(`/api/get/orders/${token}`)
@@ -98,55 +143,53 @@ export default function Orders() {
       })
       .finally(() => {});
   }, []);
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    fetchGet(`/api/get/catalogue/${token}`)
+      .then((data) => {
+        setProductNames(data)
+      })
+      .catch((error) => {
+        console.error('Error fetching catalogue data:', error);
+      })
+      .finally(() => {});
+  }, []);
 
   return (
     <Stack spacing={2} sx={{ textAlign: "left" }}>
-      <Typography variant="h4" >Orders</Typography>
+      <Typography variant="h4" >Daftar Purchase Order</Typography>
       <Stack spacing={2}>
-        <Stack
-          spacing={{ xs: 2, sm: 2 }}
-          direction="row"
-          useFlexGap
-          sx={{ flexWrap: "wrap", alignItems: "stretch" }}
-        >
-          <CustomPaper>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </Typography>
-          </CustomPaper>
-          <CustomPaper>
-            <Typography variant="body1">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Typography>
-          </CustomPaper>
-        </Stack>
-        <CustomPaper>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </Typography>
-        </CustomPaper>
         <CustomDataGrid
-          columns={columnsOrders}
+          columns={columnsOrdersWithActions}
           rows={rows}
           getRowId={(row) => row.order_id}
           onRowSelectionModelChange={() => {}}
           sx={{ maxWidth: 'calc(100vw - 112px)' }}
         />
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Create Order
+        <Button variant="contained" onClick={handleClickOpen}>
+          Buat Purchase Order
         </Button>
+        <FormDialog
+          onSubmitContent={onSubmitDelete}
+          open={deleteOpen}
+          title='Delete Product'
+          contentText="Apakah Anda yakin ingin menghapus produk ini dari katalog?"
+          content={<></>}
+          handleClose={handleDeleteClose}
+          submitLabel='Delete Product'
+        />
         <FormDialog
           onSubmitContent={onSubmitContent}
           open={open}
-          title='Create Order'
-          contentText="The order you submit will appear in the selected supplier's dashboard. Based on your order, the supplier can then create an invoice, which you can choose to approve or deny."
+          title='Buat Purchase Order'
+          contentText="Anda dapat memasukkan data pesanan Anda di sini. Surat Purchase Order dapat dicetak setelah pesanan dibuat."
           content={
             <Box>
               <FormControl autoFocus variant="filled" margin="dense" fullWidth required>
-                <InputLabel id="supplier-name-label">Supplier Name</InputLabel>
+                <InputLabel id="supplier-name-label">Nama Supplier</InputLabel>
                 <Select
                   labelId="supplier-name-label"
-                  label="Supplier Name"
+                  label="Nama Supplier"
                   value={supplierName}
                   onChange={handleChangeSupplierName}
                   name="supplier_id"
@@ -164,28 +207,33 @@ export default function Orders() {
                 margin="dense"
                 variant="filled"
                 name="note"
-                label="Note to Supplier"
+                label="Catatan"
               />
               <Stack>
                 <Typography variant='h6' sx={{ mt: 2 }}>
-                  Items
+                  Produk-Produk
                 </Typography>
                 {fields.map((field, index) => (
                   <Box key={index}>
                     <CustomPaper sx={{ mt: 1 }}>
                       <Stack>
                         <Typography variant='overline'>
-                          {`Item ${index + 1}`}
+                          {`Produk ${index + 1}`}
                         </Typography>
-                        <TextField
-                          size="small"
-                          fullWidth
-                          required
-                          margin="dense"
-                          variant="filled"
-                          name={`item_name_${index}`}
-                          label={`Name`}
-                        />
+                        <FormControl autoFocus size="small" variant="filled" margin="dense" fullWidth required>
+                          <InputLabel id="product-name-label">Nama Produk</InputLabel>
+                          <Select
+                            labelId="product-name-label"
+                            label="Nama Produk"
+                            name={`item_name_${index}`}
+                          >
+                            {[...productNames].map((_, i) =>
+                              <MenuItem value={productNames[i].catalogue_id}>
+                                {`${productNames[i].catalogue_id} - ${decodeURI(productNames[i].name)} (${decodeURI(productNames[i].unit)})`}
+                              </MenuItem>
+                            )}
+                          </Select>
+                        </FormControl>
                         <TextField
                           size="small"
                           fullWidth
@@ -193,33 +241,24 @@ export default function Orders() {
                           margin="dense"
                           variant="filled"
                           name={`quantity_${index}`}
-                          label={`Quantity`}
+                          label="Jumlah"
                           type="number"
-                        />
-                        <TextField
-                          size="small"
-                          fullWidth
-                          required
-                          margin="dense"
-                          variant="filled"
-                          name={`unit_${index}`}
-                          label={`Unit`}
                         />
                       </Stack>
                       <Button sx={{ mt: 1.5 }} variant="text" disabled={fields.length === 1} startIcon={<Remove />} onClick={() => handleRemoveField(index)} color="error">
-                        Remove Item
+                        Hapus Produk
                       </Button>
                     </CustomPaper>
                   </Box>
                 ))}
-                <Button sx={{ mt: 1 }} variant="outlined" startIcon={<Add />} onClick={handleAddField}>
-                  Add More Item
+                <Button sx={{ mt: 1 }} variant="contained" startIcon={<Add />} onClick={handleAddField}>
+                  Tambahkan Produk
                 </Button>
               </Stack>
             </Box>
           }
           handleClose={handleClose}
-          submitLabel='Submit'
+          submitLabel='Buat Purchase Order'
         />
       </Stack>
     </Stack>

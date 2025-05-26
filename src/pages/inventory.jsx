@@ -41,6 +41,7 @@ import ScaleIcon from '@mui/icons-material/Scale';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import GradingIcon from '@mui/icons-material/Grading';
 import {
   GridActionsCellItem,
 } from "@mui/x-data-grid";
@@ -76,10 +77,17 @@ export default function Inventory() {
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
     const token = localStorage.getItem('auth_token');
+    const type = "Add"
 
     fetchPut(`/api/put/inventory/${token}/${formJson.supplier_id}/${convertDateFormat(formJson.received_date)}/${convertDateFormat(formJson.expiration_date)}/${formJson.quantity}/${formJson.unit_price}/${formJson.storage_location}/${formJson.note}/${catalogueID}`)
-      .then((_) => {
-        location.reload();
+      .then((response) => {
+        fetchPut(`/api/put/history/${token}/${response.meta.last_row_id}/${type}`)
+          .then((_) => {
+            location.reload();
+          })
+          .catch((error) => {
+            console.error('Error appending history: ', error);
+          });
       })
       .catch((error) => {
         console.error('Error adding product data: ', error);
@@ -107,6 +115,7 @@ export default function Inventory() {
 
   const [addOpen, setAddOpen] = useState(false);
   const [subtractOpen, setSubtractOpen] = useState(false);
+  const [gradingOpen, setGradingOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const handleClickAddOpen = (params) => {
@@ -119,6 +128,13 @@ export default function Inventory() {
     localStorage.setItem('current_product_id', productID);
     setSubtractOpen(true);
   };
+  const handleClickGradingOpen = (params) => {
+    const productID = params.row.product_id;
+    const details = rows.find(x => x.product_id == productID);
+    localStorage.setItem('current_product_id', productID);
+    localStorage.setItem('current_water_content', details.water_content);
+    setGradingOpen(true);
+  }
   const handleClickEditOpen = (params) => {
     const productID = params.row.product_id;
     const details = rows.find(x => x.product_id == productID);
@@ -144,6 +160,11 @@ export default function Inventory() {
     localStorage.removeItem('current_product_id');
     setSubtractOpen(false);
   };
+  const handleGradingClose = () => {
+    localStorage.removeItem('current_product_id');
+    localStorage.removeItem('current_water_content');
+    setGradingOpen(false);
+  };
   const handleEditClose = () => {
     localStorage.removeItem('current_product_id');
     setEditOpen(false);
@@ -161,6 +182,19 @@ export default function Inventory() {
       })
       .catch((error) => {
         console.error('Error deleting product data: ', error);
+      });
+  };
+  const onSubmitGrading = (event) => {
+    const formData = new FormData(event.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    const token = localStorage.getItem('auth_token');
+
+    fetchPost(`/api/post/grading/${token}/${formJson.water_content}/${localStorage.getItem('current_product_id')}`)
+      .then((_) => {
+        location.reload();
+      })
+      .catch((error) => {
+        console.error('Error adding grading data: ', error);
       });
   };
   const onSubmitEdit = (event) => {
@@ -187,7 +221,9 @@ export default function Inventory() {
     field: 'actions',
     type: 'actions',
     sortable: false,
+    minWidth: 150,
     getActions: (params) => [
+      <GridActionsCellItem icon={<GradingIcon />} label="Grading" onClick={() => handleClickGradingOpen(params)} />,
       <GridActionsCellItem icon={<EditIcon />} label="Edit" onClick={() => handleClickEditOpen(params)} />,
       <GridActionsCellItem icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleClickDeleteOpen(params)} />,
     ],
@@ -365,6 +401,34 @@ export default function Inventory() {
           }
           handleClose={handleClose}
           submitLabel='Tambahkan Produk'
+        />
+        <FormDialog
+          onSubmitContent={onSubmitGrading}
+          open={gradingOpen}
+          title='Grading Produk'
+          contentText="Masukkan kadar air dari biji kopi untuk keperluan grading di sini."
+          content={
+            <Box>
+              <TextField
+                required
+                margin="dense"
+                id="water_content"
+                name="water_content"
+                label="Kadar Air"
+                type="number"
+                fullWidth
+                variant="filled"
+                slotProps={{
+                  input: {
+                    startAdornment: <InputAdornment position="start">%</InputAdornment>,
+                  },
+                }}
+                defaultValue={localStorage.getItem('current_water_content')}
+              />
+            </Box>
+          }
+          handleClose={handleGradingClose}
+          submitLabel='Beri Nilai Pada Produk'
         />
         <FormDialog
           onSubmitContent={onSubmitDelete}

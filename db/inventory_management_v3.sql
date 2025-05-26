@@ -39,6 +39,7 @@ create table if not exists inventory (
   quantity integer,
   unit_price decimal(10, 2),
   storage_location text,
+  water_content integer,
   note text,
   catalogue_id integer,
   foreign key (supplier_id) references suppliers(supplier_id),
@@ -51,3 +52,46 @@ create table if not exists tokens (
   created_at timestamp not null default current_timestamp,
   foreign key (username) references users(username)
 );
+create table if not exists history (
+  history_id integer primary key,
+  product_id integer,
+  type text,
+  time timestamp not null default current_timestamp,
+  username text,
+  foreign key (product_id) references inventory(product_id),
+  foreign key (username) references users(username)
+);
+create table if not exists orders (
+  order_id integer primary key,
+  created_date timestamp default current_timestamp,
+  note text,
+  username text,
+  supplier_id integer,
+  foreign key (username) references users(username),
+  foreign key (supplier_id) references suppliers(supplier_id)
+);
+create table if not exists order_details (
+  order_detail_id integer primary key,
+  order_id integer,
+  catalogue_id integer,
+  quantity integer,
+  foreign key (order_id) references orders(order_id),
+  foreign key (catalogue_id) references catalogue(catalogue_id)
+);
+-- create table if not exists invoices (
+  -- invoice_id integer primary key,
+  -- created_date timestamp default current_timestamp,
+  -- note text,
+  -- username text,
+  -- supplier_id integer,
+  -- foreign key (username) references users(username),
+  -- foreign key (supplier_id) references suppliers(supplier_id)
+-- );
+-- create table if not exists invoice_details (
+  -- invoice_detail_id integer primary key,
+  -- invoice_id integer,
+  -- catalogue_id integer,
+  -- quantity integer,
+  -- foreign key (invoice_id) references invoices(invoice_id),
+  -- foreign key (catalogue_id) references catalogue(catalogue_id)
+-- );

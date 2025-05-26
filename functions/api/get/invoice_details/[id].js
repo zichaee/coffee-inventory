@@ -5,7 +5,7 @@ export async function onRequestGet(context) {
   const token = context.params.id;
   const permissions = await getTokenPermissions(token, context);
 
-  if (permissions.access_invoices_read == 1) {
+  if (permissions.access_inventory_read == 1) {
     const ps = context.env.INVENTORY_MANAGEMENT.prepare("SELECT * FROM invoice_details;");
     const data = await ps.run();
     return Response.json(data.results);

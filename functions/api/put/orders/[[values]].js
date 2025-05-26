@@ -9,7 +9,7 @@ export async function onRequestPut(context) {
   const permissions = await getTokenPermissions(token, context);
   const username = await getTokenUser(token, context);
 
-  if (permissions.access_orders_write == 1) {
+  if (permissions.access_inventory_write == 1) {
     const ps = context.env.INVENTORY_MANAGEMENT.prepare("insert into orders(username, note, supplier_id) values(?, ?, ?);")
       .bind(username, ...values);
     const data = await ps.run();

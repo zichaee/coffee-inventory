@@ -10,7 +10,8 @@ import Home from "./pages/home.jsx";
 import Inventory from "./pages/inventory.jsx";
 import Catalogue from "./pages/catalogue.jsx";
 import Suppliers from "./pages/suppliers.jsx";
-//import Orders from "./pages/orders.jsx";
+import Orders from "./pages/orders.jsx";
+import OrderDetails from "./pages/order_details.jsx";
 //import Sales from "./pages/sales.jsx";
 //import Invoices from "./pages/invoices.jsx";
 import Users from "./pages/users.jsx";
@@ -86,8 +87,10 @@ export default function App() {
           <Route path='/' element={<Landing content={<Home />} />} />
           <Route path='/catalogue' element={<Landing content={<Catalogue />} />} />
           <Route path='/suppliers' element={<Landing content={<Suppliers />} />} />
+          <Route path='/orders' element={<Landing content={<Orders />} />} />
           <Route path='/users' element={<Landing content={<Users />} />} />
           <Route path='/inventory/*' element={<Landing content={<Inventory />} />} />
+          <Route path='/order-details/*' element={<Landing content={<OrderDetails />} />} />
         </Routes>
       </BrowserRouter>
     );

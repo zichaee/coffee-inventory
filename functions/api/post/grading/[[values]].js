@@ -1,7 +1,7 @@
 import Cloudflare from 'cloudflare';
-import { getTokenPermissions } from '../../../utils.js';
+import { getTokenPermissions, getTokenUser } from '../../../utils.js';
 
-export async function onRequestPut(context) {
+export async function onRequestPost(context) {
   const rawValues = context.params.values;
   const values = rawValues.map(item => item === 'null' ? null : item);
 
@@ -9,10 +9,16 @@ export async function onRequestPut(context) {
   const permissions = await getTokenPermissions(token, context);
 
   if (permissions.access_inventory_write == 1) {
-    const ps = context.env.INVENTORY_MANAGEMENT.prepare("insert into order_details(order_id, catalogue_id, quantity) values(?, ?, ?);")
+    const ps = context.env.INVENTORY_MANAGEMENT.prepare("update inventory set water_content = ? where product_id = ?;")
       .bind(...values);
     const data = await ps.run();
-    return Response.json(data.results);
+
+    return Response.json({
+      success: data.success,
+      meta: {
+        last_row_id: data.meta.last_row_id
+      }
+    });
   } else {
     return Response.error();
   }

@@ -51,6 +51,7 @@ export default function Landing(props) {
         {[
           "Suppliers",
           "Catalogue",
+          "Orders",
         ].map((text) => (
           <ListItem button key={text} component="a" href={`/${text.toLowerCase().replace(/ /g, "-")}`}>
             <ListItemText primary={text} />
@@ -114,6 +115,7 @@ export default function Landing(props) {
                 <Tab component="a" label="Home" index={2} href="/" />
                 <Tab component="a" label="Suppliers" index={2} href="/suppliers" />
                 <Tab component="a" label="Catalogue" href="/catalogue" />
+                <Tab component="a" label="Orders" href="/orders" />
               </Tabs>
             </AppBar>
             <Box sx={{ height: '64px' }}></Box>

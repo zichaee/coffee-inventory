@@ -6,13 +6,31 @@ const columnsCatalogue = [
   { field: 'unit', headerName: 'Satuan', minWidth: 200 },
 ]
 
+const grader = (x) => {
+  if (typeof x === "undefined" || x === null) {
+    return "Belum dinilai";
+  }
+  else {
+    if (x >= 12) {
+      return "Grade 3";
+    }
+    else if (x >= 2 && x < 12) {
+      return "Grade 2";
+    }
+    else {
+      return "Grade 1";
+    }
+  }
+};
+
 const columnsInventory = [
-  { field: 'supplier_id', headerName: 'ID Supplier', minWidth: 200 },
+  { field: 'water_content', headerName: 'Grade', minWidth: 200, valueFormatter: grader },
+  { field: 'storage_location', headerName: 'Lokasi Penyimpanan', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
+  { field: 'quantity', headerName: 'Jumlah', minWidth: 200 },
   { field: 'received_date', headerName: 'Tanggal Diterima', minWidth: 200 },
   { field: 'expiration_date', headerName: 'Tanggal Kadaluarsa', minWidth: 200 },
-  { field: 'quantity', headerName: 'Jumlah', minWidth: 200 },
   { field: 'unit_price', headerName: 'Harga Per Satuan', minWidth: 200 },
-  { field: 'storage_location', headerName: 'Lokasi Penyimpanan', minWidth: 200 },
+  { field: 'supplier_id', headerName: 'ID Supplier', minWidth: 200 },
   { field: 'note', headerName: 'Catatan', minWidth: 800, valueFormatter: (x) => decodeURI(x) },
 ]
 
@@ -32,9 +50,27 @@ const columnsSuppliers = [
   { field: 'username', headerName: 'Username', minWidth: 200 },
 ]
 
+const columnsOrders = [
+  { field: 'order_id', headerName: 'Order ID', minWidth: 200 },
+  { field: 'created_date', headerName: 'Created Date', minWidth: 200 },
+  { field: 'note', headerName: 'Note', minWidth: 200 },
+  { field: 'username', headerName: 'Username', minWidth: 200 },
+  { field: 'supplier_id', headerName: 'Supplier ID', minWidth: 200 },
+]
+
+const columnsOrderDetails = [
+  { field: 'catalogue_id', headerName: 'Catalogue ID', minWidth: 200 },
+  { field: 'name', headerName: 'Catalogue Name', minWidth: 200 },
+  { field: 'category', headerName: 'Category', minWidth: 200 },
+  { field: 'unit', headerName: 'Unit', minWidth: 200 },
+  { field: 'quantity', headerName: 'Quantity', minWidth: 200 },
+]
+
 export {
   columnsCatalogue,
   columnsInventory,
   columnsUsers,
+  columnsOrders,
+  columnsOrderDetails,
   columnsSuppliers,
 };
