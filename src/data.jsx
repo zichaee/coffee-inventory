@@ -43,17 +43,17 @@ const columnsUsers = [
 
 const columnsSuppliers = [
   { field: 'supplier_id', headerName: 'Supplier ID', minWidth: 200 },
-  { field: 'supplier_name', headerName: 'Supplier Name', minWidth: 200 },
-  { field: 'phone_number', headerName: 'Phone Number', minWidth: 200 },
-  { field: 'email', headerName: 'Email', minWidth: 200 },
-  { field: 'address', headerName: 'Address', minWidth: 200 },
+  { field: 'supplier_name', headerName: 'Supplier Name', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
+  { field: 'phone_number', headerName: 'Phone Number', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
+  { field: 'email', headerName: 'Email', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
+  { field: 'address', headerName: 'Address', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
   { field: 'username', headerName: 'Username', minWidth: 200 },
 ]
 
 const columnsOrders = [
   { field: 'order_id', headerName: 'Order ID', minWidth: 200 },
   { field: 'created_date', headerName: 'Created Date', minWidth: 200 },
-  { field: 'note', headerName: 'Note', minWidth: 200 },
+  { field: 'note', headerName: 'Note', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
   { field: 'username', headerName: 'Username', minWidth: 200 },
   { field: 'supplier_id', headerName: 'Supplier ID', minWidth: 200 },
 ]

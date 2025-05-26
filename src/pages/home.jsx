@@ -81,7 +81,7 @@ export default function Home() {
                         </Button>
                       }
                     >
-                      Stok untuk produk '{x.name}' (ID Katalog: {x.catalogue_id}) telah habis.
+                      Stok untuk produk '{decodeURI(x.name)}' (ID Katalog: {x.catalogue_id}) telah habis.
                     </Alert>
                   );
               })
