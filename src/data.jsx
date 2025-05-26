@@ -60,8 +60,8 @@ const columnsOrders = [
 
 const columnsOrderDetails = [
   { field: 'catalogue_id', headerName: 'Catalogue ID', minWidth: 200 },
-  { field: 'name', headerName: 'Catalogue Name', minWidth: 200 },
-  { field: 'category', headerName: 'Category', minWidth: 200 },
+  { field: 'name', headerName: 'Catalogue Name', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
+  { field: 'category', headerName: 'Category', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
   { field: 'unit', headerName: 'Unit', minWidth: 200 },
   { field: 'quantity', headerName: 'Quantity', minWidth: 200 },
 ]
