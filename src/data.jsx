@@ -31,6 +31,7 @@ const columnsInventory = [
   { field: 'expiration_date', headerName: 'Tanggal Kadaluarsa', minWidth: 200 },
   { field: 'unit_price', headerName: 'Harga Per Satuan', minWidth: 200 },
   { field: 'supplier_id', headerName: 'ID Supplier', minWidth: 200 },
+  { field: 'supplier_name', headerName: 'Nama Supplier', minWidth: 200 },
   { field: 'note', headerName: 'Catatan', minWidth: 800, valueFormatter: (x) => decodeURI(x) },
 ]
 
