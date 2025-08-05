@@ -179,7 +179,7 @@ export default function OrderDetails() {
                     {orderDetails.map((x) => {
                       return (
                         <ListItem dense={true}>
-                          <ListItemText primary={x.name} />
+                          <ListItemText primary={decodeURI(x.name)} />
                         </ListItem>
                       );
                     })}
@@ -203,7 +203,7 @@ export default function OrderDetails() {
                     {orderDetails.map((x) => {
                       return (
                         <ListItem dense={true}>
-                          <ListItemText primary={x.unit} />
+                          <ListItemText primary={decodeURI(x.unit)} />
                         </ListItem>
                       );
                     })}
