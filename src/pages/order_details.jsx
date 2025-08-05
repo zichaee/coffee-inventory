@@ -1,3 +1,5 @@
+import companyLogo from "../assets/logo.png";
+
 import {
   fetchGet,
   fetchPut,
@@ -136,67 +138,77 @@ export default function OrderDetails() {
         </Button>
         <Box sx={{ display: 'block' }} visibility="hidden" position="absolute">
           <div id="print-area">
-            <Stack spacing={2}>
-              <Typography>
-                <ListItem dense={true}>
-                  <ListItemText primary={`Order ID: ${orderID}`} />
-                </ListItem>
-                <ListItem dense={true}>
-                  <ListItemText primary={`Supplier ID: ${currentOrder.supplier_id}`} />
-                </ListItem>
-                <ListItem dense={true}>
-                  <ListItemText primary={`Tanggal Pesanan Dibuat: ${currentOrder.created_date}`} />
-                </ListItem>
-              </Typography>
-              <Stack spacing={2} direction='row' sx={{ minWidth: 1000 }}>
+            <Stack spacing={2} alignItems="start">
+              <Stack spacing={1} alignItems="center" sx={{ mb: 2 }}>
+                <img src={companyLogo} alt="Company Logo" style={{ height: 80 }} />
+                <Typography variant="subtitle2">+62 857-7310-6522</Typography>
+                <Stack spacing={0} alignItems="center">
+                  <Typography variant="subtitle2">Jalan Wanasuka, Pangalengan, Kabupaten Bandung</Typography>
+                  <Typography variant="subtitle2">Jawa Barat 40378</Typography>
+                </Stack>
+              </Stack>
+              <Stack spacing={2}>
                 <Typography>
                   <ListItem dense={true}>
-                    <ListItemText primary='ID Katalog Produk' />
+                    <ListItemText primary={`Order ID: ${orderID}`} />
                   </ListItem>
-                  {orderDetails.map((x) => {
-                    return (
-                      <ListItem dense={true}>
-                        <ListItemText primary={x.catalogue_id} />
-                      </ListItem>
-                    );
-                  })}
-                </Typography>
-                <Typography>
                   <ListItem dense={true}>
-                    <ListItemText primary='Nama Katalog Produk' />
+                    <ListItemText primary={`Supplier ID: ${currentOrder.supplier_id}`} />
                   </ListItem>
-                  {orderDetails.map((x) => {
-                    return (
-                      <ListItem dense={true}>
-                        <ListItemText primary={x.name} />
-                      </ListItem>
-                    );
-                  })}
-                </Typography>
-                <Typography>
                   <ListItem dense={true}>
-                    <ListItemText primary='Jumlah' />
+                    <ListItemText primary={`Tanggal Pesanan Dibuat: ${currentOrder.created_date}`} />
                   </ListItem>
-                  {orderDetails.map((x) => {
-                    return (
-                      <ListItem dense={true}>
-                        <ListItemText primary={x.quantity} />
-                      </ListItem>
-                    );
-                  })}
                 </Typography>
-                <Typography>
-                  <ListItem dense={true}>
-                    <ListItemText primary='Satuan Ukuran' />
-                  </ListItem>
-                  {orderDetails.map((x) => {
-                    return (
-                      <ListItem dense={true}>
-                        <ListItemText primary={x.unit} />
-                      </ListItem>
-                    );
-                  })}
-                </Typography>
+                <Stack spacing={2} direction='row' sx={{ minWidth: 1000 }}>
+                  <Typography>
+                    <ListItem dense={true}>
+                      <ListItemText primary='ID Katalog Produk' />
+                    </ListItem>
+                    {orderDetails.map((x) => {
+                      return (
+                        <ListItem dense={true}>
+                          <ListItemText primary={x.catalogue_id} />
+                        </ListItem>
+                      );
+                    })}
+                  </Typography>
+                  <Typography>
+                    <ListItem dense={true}>
+                      <ListItemText primary='Nama Katalog Produk' />
+                    </ListItem>
+                    {orderDetails.map((x) => {
+                      return (
+                        <ListItem dense={true}>
+                          <ListItemText primary={x.name} />
+                        </ListItem>
+                      );
+                    })}
+                  </Typography>
+                  <Typography>
+                    <ListItem dense={true}>
+                      <ListItemText primary='Jumlah' />
+                    </ListItem>
+                    {orderDetails.map((x) => {
+                      return (
+                        <ListItem dense={true}>
+                          <ListItemText primary={x.quantity} />
+                        </ListItem>
+                      );
+                    })}
+                  </Typography>
+                  <Typography>
+                    <ListItem dense={true}>
+                      <ListItemText primary='Satuan Ukuran' />
+                    </ListItem>
+                    {orderDetails.map((x) => {
+                      return (
+                        <ListItem dense={true}>
+                          <ListItemText primary={x.unit} />
+                        </ListItem>
+                      );
+                    })}
+                  </Typography>
+                </Stack>
               </Stack>
             </Stack>
           </div>
