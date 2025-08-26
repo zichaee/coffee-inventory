@@ -95,7 +95,9 @@ export default function Inventory() {
     const token = localStorage.getItem('auth_token');
 
     fetchPut(`/api/put/inventory/${token}/${formJson.supplier_id}/${convertDateFormat(formJson.received_date)}/${convertDateFormat(formJson.expiration_date)}/${formJson.quantity}/${formJson.unit_price}/${formJson.storage_location}/${formJson.note}/${catalogueID}`)
-      .then((response) => {})
+      .then((response) => {
+        location.reload();
+      })
       .catch((error) => {
         console.error('Error adding product data: ', error);
       });
@@ -241,6 +243,13 @@ export default function Inventory() {
         ]
     }
   }
+  else {
+    if (permissions.access_gradings_write == 1) {
+      actions = (params) => [
+          <GridActionsCellItem icon={<GradingIcon />} label="Grading" onClick={() => handleClickGradingOpen(params)} />,
+        ]
+    }
+  }
 
   const columnsInventoryWithActions = [{
     field: 'actions',
@@ -336,7 +345,7 @@ export default function Inventory() {
                   name="supplier_id"
                 >
                   {[...supplierNames].map((_, i) =>
-                    <MenuItem value={supplierNames[i].supplier_id}>{`${supplierNames[i].supplier_id} - ${supplierNames[i].supplier_name}`}</MenuItem>
+                    <MenuItem value={supplierNames[i].supplier_id}>{`${decodeURI(supplierNames[i].supplier_id)} - ${decodeURI(supplierNames[i].supplier_name)}`}</MenuItem>
                   )}
                 </Select>
               </FormControl>
