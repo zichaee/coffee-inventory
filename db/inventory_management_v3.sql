@@ -1,12 +1,16 @@
 pragma defer_foreign_keys=false;
 create table if not exists user_roles (
   user_role_name text primary key,
-  access_users_read integer not null,
-  access_users_write integer not null,
-  access_catalogue_read integer not null,
-  access_catalogue_write integer not null,
-  access_inventory_read integer not null,
-  access_inventory_write integer not null
+  access_users_read integer not null, -- admin
+  access_users_write integer not null, -- admin
+  access_catalogue_read integer not null, -- admin, produksi, gudang, pelanggan
+  access_catalogue_write integer not null, -- admin, gudang, pelanggan
+  access_inventory_read integer not null, -- admin, produksi, gudang, pelanggan
+  access_inventory_write integer not null, -- admin, gudang, pelanggan
+  access_orders_read integer not null, -- admin, produksi, pelanggan
+  access_orders_write integer not null, -- admin, produksi, pelanggan
+  access_gradings_read integer not null, -- admin, produksi, gudang, pelanggan
+  access_gradings_write integer not null -- admin, produksi
 );
 create table if not exists users (
   username text primary key,
@@ -52,15 +56,15 @@ create table if not exists tokens (
   created_at timestamp not null default current_timestamp,
   foreign key (username) references users(username)
 );
-create table if not exists history (
-  history_id integer primary key,
-  product_id integer,
-  type text,
-  time timestamp not null default current_timestamp,
-  username text,
-  foreign key (product_id) references inventory(product_id),
-  foreign key (username) references users(username)
-);
+-- create table if not exists history (
+  -- history_id integer primary key,
+  -- product_id integer,
+  -- type text,
+  -- time timestamp not null default current_timestamp,
+  -- username text,
+  -- foreign key (product_id) references inventory(product_id),
+  -- foreign key (username) references users(username)
+-- );
 create table if not exists orders (
   order_id integer primary key,
   created_date timestamp default current_timestamp,

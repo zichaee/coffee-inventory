@@ -47,10 +47,26 @@ import {
 } from "@mui/x-data-grid";
 
 export default function Inventory() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [permissions, setPermissions] = useState({});
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    fetchGet(`/api/get/user_role/${token}`)
+      .then((data) => {
+        setPermissions(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching permissions data:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
   const catalogueID = window.location.href.split('/').pop();
 
   const [rows, setRows] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const [products, setProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState({});
@@ -77,18 +93,9 @@ export default function Inventory() {
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
     const token = localStorage.getItem('auth_token');
-    const type = "Add"
 
     fetchPut(`/api/put/inventory/${token}/${formJson.supplier_id}/${convertDateFormat(formJson.received_date)}/${convertDateFormat(formJson.expiration_date)}/${formJson.quantity}/${formJson.unit_price}/${formJson.storage_location}/${formJson.note}/${catalogueID}`)
-      .then((response) => {
-        fetchPut(`/api/put/history/${token}/${response.meta.last_row_id}/${type}`)
-          .then((_) => {
-            location.reload();
-          })
-          .catch((error) => {
-            console.error('Error appending history: ', error);
-          });
-      })
+      .then((response) => {})
       .catch((error) => {
         console.error('Error adding product data: ', error);
       });
@@ -217,16 +224,30 @@ export default function Inventory() {
   }
 
   // Add the action buttons
+  let actions = (params) => []
+
+  if (permissions.access_inventory_write == 1) {
+    if (permissions.access_gradings_write == 1) {
+      actions = (params) => [
+          <GridActionsCellItem icon={<GradingIcon />} label="Grading" onClick={() => handleClickGradingOpen(params)} />,
+          <GridActionsCellItem icon={<EditIcon />} label="Edit" onClick={() => handleClickEditOpen(params)} />,
+          <GridActionsCellItem icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleClickDeleteOpen(params)} />,
+        ]
+    }
+    else {
+      actions = (params) => [
+          <GridActionsCellItem icon={<EditIcon />} label="Edit" onClick={() => handleClickEditOpen(params)} />,
+          <GridActionsCellItem icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleClickDeleteOpen(params)} />,
+        ]
+    }
+  }
+
   const columnsInventoryWithActions = [{
     field: 'actions',
     type: 'actions',
     sortable: false,
     minWidth: 150,
-    getActions: (params) => [
-      <GridActionsCellItem icon={<GradingIcon />} label="Grading" onClick={() => handleClickGradingOpen(params)} />,
-      <GridActionsCellItem icon={<EditIcon />} label="Edit" onClick={() => handleClickEditOpen(params)} />,
-      <GridActionsCellItem icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleClickDeleteOpen(params)} />,
-    ],
+    getActions: (params) => actions(params),
   }].concat(columnsInventory);
 
   useEffect(() => {

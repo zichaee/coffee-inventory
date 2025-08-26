@@ -67,6 +67,15 @@ const columnsOrderDetails = [
   { field: 'quantity', headerName: 'Quantity', minWidth: 200 },
 ]
 
+const columnsHistory = [
+  { field: 'history_id', headerName: 'History ID', minWidth: 200 },
+  { field: 'product_id', headerName: 'Product ID', minWidth: 200 },
+  { field: 'type', headerName: 'Type', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
+  { field: 'timestamp', headerName: 'Timestamp', minWidth: 200 },
+  { field: 'category', headerName: 'Category', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
+  { field: 'username', headerName: 'Username', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
+]
+
 export {
   columnsCatalogue,
   columnsInventory,

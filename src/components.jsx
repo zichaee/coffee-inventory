@@ -56,6 +56,7 @@ const CustomDataGrid = (props) => {
           toolbar: {
             showQuickFilter: true,
             csvOptions: { allColumns: true },
+            printOptions: { disableToolbarButton: true },
           }
         }}
         disableRowSelectionOnClick

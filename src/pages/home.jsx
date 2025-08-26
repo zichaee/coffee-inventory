@@ -37,7 +37,7 @@ export default function Home() {
         <CustomPaper>
           <Stack spacing={2}>
             <Typography variant="body1">
-              Meningkatkan Efisiensi Pengelolaan Inventaris Produk Kopi Lokal dengan Teknologi Terintegrasi
+              Sistem Informasi Pengelolaan Inventaris Produk Kopi Lokal dengan Teknologi Terintegrasi
             </Typography>
           </Stack>
         </CustomPaper>
@@ -51,7 +51,7 @@ export default function Home() {
             <Stack spacing={2}>
               <Typography variant="h6" >Tentang Sistem</Typography>
               <Typography variant="body1">
-                Sistem ini dirancang untuk membantu startup Tani Coffee Indonesia dalam mengelola rantai pasok dan stok produk secara efisien dan akurat. Dibangun dengan metode Extreme Programming (XP) untuk memastikan pengembangan cepat, kolaboratif, dan berorientasi pada kebutuhan pengguna.
+                Sistem ini dirancang untuk membantu startup Tani Coffee Indonesia dalam mengelola rantai pasok dan stok produk secara akurat. Dibangun dengan metode Extreme Programming (XP) untuk memastikan pengembangan cepat, kolaboratif, dan berorientasi pada kebutuhan pengguna.
               </Typography>
             </Stack>
           </CustomPaper>

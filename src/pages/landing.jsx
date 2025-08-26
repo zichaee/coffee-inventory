@@ -1,8 +1,10 @@
+import { fetchGet, fetchPut } from "../controller.jsx"
+
 import { customTheme } from "../theme.jsx"
 import companyLogo from "../assets/logo_white.png";
 import bg from "../assets/bg.jpeg";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -33,6 +35,23 @@ import Logout from '@mui/icons-material/Logout';
 const drawerWidth = 240;
 
 export default function Landing(props) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [permissions, setPermissions] = useState({});
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    fetchGet(`/api/get/user_role/${token}`)
+      .then((data) => {
+        setPermissions(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching permissions data:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isLargeScreen = useMediaQuery(customTheme.breakpoints.up("md"));
   const [anchorEl, setAnchorEl] = useState(null);
@@ -42,17 +61,29 @@ export default function Landing(props) {
     setIsDrawerOpen(open);
   };
 
+  let menuOptions
+
+  if (permissions.access_orders_read == 1) {
+    menuOptions = [
+      "Suppliers",
+      "Catalogue",
+      "Orders",
+    ]
+  }
+  else {
+    menuOptions = [
+      "Suppliers",
+      "Catalogue",
+    ]
+  }
+
   const drawerContent = (
     <div>
       <List>
         <ListItem button component="a" href="/">
           <ListItemText primary="Home" />
         </ListItem>
-        {[
-          "Suppliers",
-          "Catalogue",
-          "Orders",
-        ].map((text) => (
+        {menuOptions.map((text) => (
           <ListItem button key={text} component="a" href={`/${text.toLowerCase().replace(/ /g, "-")}`}>
             <ListItemText primary={text} />
           </ListItem>
@@ -115,7 +146,7 @@ export default function Landing(props) {
                 <Tab component="a" label="Home" index={2} href="/" />
                 <Tab component="a" label="Suppliers" index={2} href="/suppliers" />
                 <Tab component="a" label="Catalogue" href="/catalogue" />
-                <Tab component="a" label="Orders" href="/orders" />
+                {(permissions.access_orders_read == 1) ? <Tab component="a" label="Orders" href="/orders" /> : <div></div>}
               </Tabs>
             </AppBar>
             <Box sx={{ height: '64px' }}></Box>
@@ -170,12 +201,15 @@ export default function Landing(props) {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
-          <MenuItem onClick={handleManageOtherAccounts}>
-            <ListItemIcon>
-              <PersonAdd fontSize="small" />
-            </ListItemIcon>
-            Kelola Akun Lain
-          </MenuItem>
+          {(permissions.access_users_write == 1) ?
+            <MenuItem onClick={handleManageOtherAccounts}>
+              <ListItemIcon>
+                <PersonAdd fontSize="small" />
+              </ListItemIcon>
+              Kelola Akun Lain
+            </MenuItem> :
+            <div></div>
+          }
           <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <Logout fontSize="small" />

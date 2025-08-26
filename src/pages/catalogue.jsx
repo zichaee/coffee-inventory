@@ -33,8 +33,24 @@ const handleSeeDetails = (params) => {
 };
 
 export default function Catalogue() {
-  const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [permissions, setPermissions] = useState({});
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    fetchGet(`/api/get/user_role/${token}`)
+      .then((data) => {
+        setPermissions(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching permissions data:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
 
   const [products, setProducts] = useState([]);
@@ -114,14 +130,25 @@ export default function Catalogue() {
   };
 
   // Add the action buttons
+  let actions = (params) => []
+
+  if (permissions.access_catalogue_write == 1) {
+    actions = (params) => [
+        <GridActionsCellItem icon={<VisibilityIcon />} label="See Details" onClick={() => handleSeeDetails(params)} />,
+        <GridActionsCellItem icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleClickDeleteOpen(params)} />,
+      ]
+  }
+  else {
+    actions = (params) => [
+        <GridActionsCellItem icon={<VisibilityIcon />} label="See Details" onClick={() => handleSeeDetails(params)} />,
+      ]
+  }
+
   const columnsCatalogueWithActions = [{
     field: 'actions',
     type: 'actions',
     sortable: false,
-    getActions: (params) => [
-      <GridActionsCellItem icon={<VisibilityIcon />} label="See Details" onClick={() => handleSeeDetails(params)} />,
-      <GridActionsCellItem icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleClickDeleteOpen(params)} />,
-    ],
+    getActions: (params) => actions(params),
   }].concat(columnsCatalogue);
 
   useEffect(() => {

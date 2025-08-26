@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
   const token = values.shift();
   const permissions = await getTokenPermissions(token, context);
 
-  if (permissions.access_inventory_write == 1) {
+  if (permissions.access_inventory_write == 1 && permissions.access_gradings_write == 1) {
     const ps = context.env.INVENTORY_MANAGEMENT.prepare("update inventory set water_content = ? where product_id = ?;")
       .bind(...values);
     const data = await ps.run();
