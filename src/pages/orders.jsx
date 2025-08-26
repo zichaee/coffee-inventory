@@ -215,7 +215,7 @@ export default function Orders() {
                   name="supplier_id"
                 >
                   {[...supplierNames].map((_, i) =>
-                    <MenuItem value={supplierNames[i].supplier_id}>{`${supplierNames[i].supplier_id} - ${supplierNames[i].supplier_name}`}</MenuItem>
+                    <MenuItem value={supplierNames[i].supplier_id}>{`${decodeURI(supplierNames[i].supplier_id)} - ${decodeURI(supplierNames[i].supplier_name)}`}</MenuItem>
                   )}
                 </Select>
               </FormControl>
