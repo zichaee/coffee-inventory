@@ -7,12 +7,7 @@ export async function onRequestGet(context) {
 
   if (permissions.access_inventory_read == 1) {
     const ps = context.env.INVENTORY_MANAGEMENT.prepare(
-      `SELECT c.*,
-      COALESCE(cd.total_quantity, 0)
-      AS total_quantity
-      FROM orders c
-      LEFT JOIN (SELECT order_id, SUM(quantity) AS total_quantity FROM order_details GROUP BY order_id) cd
-      ON c.order_id = cd.order_id;`
+      `SELECT * FROM history;`
     );
     const data = await ps.run();
     return Response.json(data.results);

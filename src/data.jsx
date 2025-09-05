@@ -57,6 +57,7 @@ const columnsOrders = [
   { field: 'note', headerName: 'Note', minWidth: 200, valueFormatter: (x) => decodeURI(x) },
   { field: 'username', headerName: 'Username', minWidth: 200 },
   { field: 'supplier_id', headerName: 'Supplier ID', minWidth: 200 },
+  { field: 'total_quantity', headerName: 'Total Jumlah', minWidth: 200 },
 ]
 
 const columnsOrderDetails = [

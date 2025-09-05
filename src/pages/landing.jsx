@@ -68,12 +68,14 @@ export default function Landing(props) {
       "Suppliers",
       "Catalogue",
       "Orders",
+      "Report",
     ]
   }
   else {
     menuOptions = [
       "Suppliers",
       "Catalogue",
+      "Report",
     ]
   }
 
@@ -147,6 +149,7 @@ export default function Landing(props) {
                 <Tab component="a" label="Suppliers" index={2} href="/suppliers" />
                 <Tab component="a" label="Catalogue" href="/catalogue" />
                 {(permissions.access_orders_read == 1) ? <Tab component="a" label="Orders" href="/orders" /> : <div></div>}
+                <Tab component="a" label="Report" href="/report" />
               </Tabs>
             </AppBar>
             <Box sx={{ height: '64px' }}></Box>
