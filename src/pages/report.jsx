@@ -2,43 +2,10 @@ import companyLogo from "../assets/logo.png";
 
 import {
   fetchGet,
-  fetchPut,
-  fetchPost,
-  fetchDelete,
 } from "../controller.jsx"
-import {
-  columnsOrderDetails,
-} from "../data.jsx"
-import {
-  CustomDataGrid,
-  CustomPaper,
-  FormDialog,
-} from "../components.jsx"
-import dayjs from "dayjs";
 
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Typography,
-  Box,
-  Stack,
-  TextField,
-  InputAdornment,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Avatar,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import PrintIcon from '@mui/icons-material/Print';
-import {
-  GridActionsCellItem,
-} from "@mui/x-data-grid";
+
 import {
   PDFViewer,
   Document,
@@ -214,9 +181,9 @@ export default function Report() {
 
             {suppliers.map((x, idx) => (
               <View style={styles.row} key={idx}>
-                <Text style={styles.cell}>{x.supplier_id}</Text>
+                <Text style={styles.cell}>{decodeURI(x.supplier_id)}</Text>
                 <Text style={styles.cell}>{decodeURI(x.supplier_name)}</Text>
-                <Text style={styles.cell}>{x.email}</Text>
+                <Text style={styles.cell}>{decodeURI(x.email)}</Text>
                 <Text style={styles.cell}>{decodeURI(x.address)}</Text>
               </View>
             ))}
@@ -229,10 +196,10 @@ export default function Report() {
                 <Text style={styles.subsectionHeader}>{decodeURI(x.name)}</Text>
 
                 <View style={styles.section}>
-                  <Text>ID Katalog: {x.catalogue_id}</Text>
-                  <Text>Kategori: {x.category}</Text>
-                  <Text>Kuantitas: {x.total_quantity}</Text>
-                  <Text>Ukuran Kuantitas: {x.unit}</Text>
+                  <Text>ID Katalog: {decodeURI(x.catalogue_id)}</Text>
+                  <Text>Kategori: {decodeURI(x.category)}</Text>
+                  <Text>Kuantitas: {decodeURI(x.total_quantity)}</Text>
+                  <Text>Ukuran Kuantitas: {decodeURI(x.unit)}</Text>
                 </View>
 
                 <View style={styles.row}>
@@ -250,10 +217,10 @@ export default function Report() {
                   inventory.filter((y) => y.catalogue_id == x.catalogue_id)
                   .map((z, idx) => (
                     <View style={styles.row} key={idx}>
-                      <Text style={styles.cell}>{z.product_id}</Text>
+                      <Text style={styles.cell}>{decodeURI(z.product_id)}</Text>
                       <Text style={styles.cell}>{grader(z.water_content)}</Text>
                       <Text style={styles.cell}>{decodeURI(z.storage_location)}</Text>
-                      <Text style={styles.cell}>{z.quantity}</Text>
+                      <Text style={styles.cell}>{decodeURI(z.quantity)}</Text>
                       <Text style={styles.cell}>{decodeURI(z.received_date)}</Text>
                       <Text style={styles.cell}>{decodeURI(z.expiration_date)}</Text>
                       <Text style={styles.cell}>{decodeURI(z.unit_price)}</Text>
@@ -277,15 +244,15 @@ export default function Report() {
 
             {orders.map((x, idx) => (
               <View style={styles.row} key={idx}>
-                <Text style={styles.cell}>{x.order_id}</Text>
+                <Text style={styles.cell}>{decodeURI(x.order_id)}</Text>
                 <Text style={styles.cell}>{decodeURI(x.created_date)}</Text>
                 <Text style={styles.cell}>
-                  {suppliers.find((y) => y.supplier_id === x.supplier_id)?.supplier_name}
+                  {decodeURI(suppliers.find((y) => y.supplier_id === x.supplier_id)?.supplier_name)}
                 </Text>
                 <Text style={styles.cell}>
-                  {suppliers.find((y) => y.supplier_id === x.supplier_id)?.email}
+                  {decodeURI(suppliers.find((y) => y.supplier_id === x.supplier_id)?.email)}
                 </Text>
-                <Text style={styles.cell}>{x.total_quantity}</Text>
+                <Text style={styles.cell}>{decodeURI(x.total_quantity)}</Text>
               </View>
             ))}
           </View>
@@ -303,15 +270,15 @@ export default function Report() {
 
             {orders.map((x, idx) => (
               <View style={styles.row} key={idx}>
-                <Text style={styles.cell}>{x.order_id}</Text>
+                <Text style={styles.cell}>{decodeURI(x.order_id)}</Text>
                 <Text style={styles.cell}>{decodeURI(x.created_date)}</Text>
                 <Text style={styles.cell}>
-                  {suppliers.find((y) => y.supplier_id === x.supplier_id)?.supplier_name}
+                  {decodeURI(suppliers.find((y) => y.supplier_id === x.supplier_id)?.supplier_name)}
                 </Text>
                 <Text style={styles.cell}>
-                  {suppliers.find((y) => y.supplier_id === x.supplier_id)?.email}
+                  {decodeURI(suppliers.find((y) => y.supplier_id === x.supplier_id)?.email)}
                 </Text>
-                <Text style={styles.cell}>{x.total_quantity}</Text>
+                <Text style={styles.cell}>{decodeURI(x.total_quantity)}</Text>
               </View>
             ))}
           </View>

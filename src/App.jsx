@@ -13,6 +13,7 @@ import Suppliers from "./pages/suppliers.jsx";
 import Orders from "./pages/orders.jsx";
 import OrderDetails from "./pages/order_details.jsx";
 import Report from "./pages/report.jsx";
+import OrderDetailsReport from "./pages/order_details_report.jsx";
 //import Sales from "./pages/sales.jsx";
 //import Invoices from "./pages/invoices.jsx";
 import Users from "./pages/users.jsx";
@@ -93,6 +94,7 @@ export default function App() {
           <Route path='/inventory/*' element={<Landing content={<Inventory />} />} />
           <Route path='/order-details/*' element={<Landing content={<OrderDetails />} />} />
           <Route path='/report' element={<Report />} />
+          <Route path='/order-details-report/*' element={<OrderDetailsReport />} />
         </Routes>
       </BrowserRouter>
     );
