@@ -9,7 +9,7 @@ export async function onRequestPost(context) {
   const permissions = await getTokenPermissions(token, context);
 
   if (permissions.access_inventory_write == 1) {
-    const ps = context.env.INVENTORY_MANAGEMENT.prepare("update inventory set received_date = ?, expiration_date = ?, quantity = ?, unit_price = ?, note = ? where product_id = ?;")
+    const ps = context.env.INVENTORY_MANAGEMENT.prepare("update inventory set received_date = ?, expiration_date = ?, quantity = ?, storage_location = ?, unit_price = ?, note = ? where product_id = ?;")
       .bind(...values);
     const data = await ps.run();
 
